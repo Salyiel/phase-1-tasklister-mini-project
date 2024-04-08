@@ -1,5 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // your code here
+
   document.addEventListener("DOMContentLoaded", () => {
     // initialize taskList class
     const taskList = new TaskList();
@@ -31,4 +30,3 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-}) 
