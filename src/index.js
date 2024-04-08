@@ -1,45 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
   // your code here
-  const form = document.querySelector("form#create-task-form")
-
-  form.addEventListener("submit", submitTodo )
-});
-
-const submitTodo = (event) => {
-  event.preventDefault()
-  // console.log(event)
-  // debugger
-
-  //save the input text in a variable
-  const newTodoText = event.target.description.value
-  console.log(newTodoText)
+  document.addEventListener("DOMContentLoaded", () => {
+    // initialize taskList class
+    const taskList = new TaskList();
+    //grab all the necessary DOM elements
   
-  //select the task DOM object
-  const tasks = document.querySelector("#tasks")
-
-  //create a new li element
-  const newLi = document.createElement("li")
-
-  //insert the new todo text inside of li element
-  newLi.innerHTML = newTodoText
-
-  //append new li onto tasks object
-  tasks.appendChild(newLi)
-
-  //reset 
-  event.target.reset()
-
-}
-
-////////DELETE/////////
-const deleteBtn = document.createElement('button')
-deleteBtn.innerText = '❌'
-newLi.append(deleteBtn)
-
-
-/////DELETE FUNCTION/////
-deleteBtn.addEventListener("click", (e) => {
-  // const removingLi = e.target.parentNode
-  // removingLi.remove()
-  newLi.remove()
-})
+    //form and relevant input fields
+    const newTaskForm = document.getElementById("create-task-form");
+    const newTaskDescription = document.getElementById("new-task-description");
+    const newTaskPriority = document.getElementById("new-task-priority");
+  
+    //ul where new tasks will live on the DOM
+    const taskUl = document.getElementById("tasks");
+  
+    const renderApp = () => (taskUl.innerHTML = taskList.renderTasks());
+    //attach event listeners
+  
+    newTaskForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      taskList.createNewTask(newTaskDescription.value);
+      // reset form
+      e.target.reset();
+      renderApp();
+    });
+  
+    taskUl.addEventListener("click", (e) => {
+      if (e.target.nodeName === "BUTTON") {
+        taskList.deleteTask(e.target.dataset.description);
+        renderApp();
+      }
+    });
+  });
+}) 
